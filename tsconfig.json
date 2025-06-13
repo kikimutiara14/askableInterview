@@ -11,7 +11,8 @@
     "skipLibCheck": true
   },
   "include": [
-    "data/*.ts"
+    "data/*.ts",
+    "src/**/*.ts",
   ],
   "exclude": ["node_modules", "dist"]
 }
