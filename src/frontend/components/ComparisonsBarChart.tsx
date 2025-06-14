@@ -1,0 +1,39 @@
+import * as React from 'react';
+import { BarChart } from '@mui/x-charts/BarChart';
+import { Typography, Box, FormControl, InputLabel, Select } from '@mui/material';
+import { ComparisonMetric, Dimension } from '../../types/analytics';
+import { D } from '@faker-js/faker/dist/airline-BUL6NtOJ';
+
+interface ComparisonBarChartProps {
+    data?: ComparisonMetric[];
+    xAxisLabel: string;
+}
+
+export default function ComparisonBarChart({ data, xAxisLabel }: ComparisonBarChartProps) {
+    return (
+        <Box>
+            <Typography variant="h6" gutterBottom sx={{ textAlign: 'center' }}>
+                Comparison Data
+            </Typography>
+
+            <BarChart
+                xAxis={[
+                    {
+                        id: 'comparison',
+                        data: data?.map((datum) => datum.name) ?? [],
+                        scaleType: 'band',
+                        label: xAxisLabel,
+                    },
+                ]}
+                series={[
+                    { data: data?.map((datum) => datum.applications) ?? [], label: 'Applications' },
+                    { data: data?.map((datum) => datum.completions) ?? [], label: 'Completions' },
+                ]}
+                height={400}
+                margin={{ top: 30, right: 30, left: 40, bottom: 40 }}
+                grid={{ horizontal: true }}
+                loading={!data}
+            />
+        </Box>
+    );
+}

@@ -30,10 +30,10 @@ describe('analyticsService.getTrends', () => {
         expect(metrics).toBeDefined();
         expect(metrics.length).toBeGreaterThan(0);
     });
-    it('returns all trends if no timeRange is provided', async () => {
+    it('returns 30d trends if no timeRange is provided', async () => {
         const metrics = await analyticsService.getTrends({});
         expect(metrics).toBeDefined();
-        expect(metrics.length).toBeGreaterThan(0);
+        expect(metrics[0].data.length).toBeGreaterThan(30);
     });
 });
 

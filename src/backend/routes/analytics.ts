@@ -1,10 +1,18 @@
 import { Router } from 'express';
 import { analyticsService } from '../services/analyticsService';
-import { TimeRange, Dimension } from '../types/analytics';
+import { TimeRange, Dimension } from '../../types/analytics';
 import { Request, Response, NextFunction } from 'express';
 
 // All routes assume /api prefix from main app
 export const analyticsRouter = Router();
+
+analyticsRouter.get('/regenerate-data', async (req, res, next) => {
+    try {
+        analyticsService.regenerateMockData();
+    } catch (err) {
+        next(err);
+    }
+});
 
 analyticsRouter.get('/summary', async (req, res, next) => {
     try {

@@ -32,14 +32,14 @@ You'll be creating visualizations and metrics that track study participation rat
 ### Dashboard Requirements
 
 - The dashboard should include at least these visualization types:
-  - Line chart (showing research participation trends over time)
-  - Bar chart (comparing metrics across study types or demographics)
-  - Summary cards/KPI indicators (showing key participation metrics)
-  - At least one additional visualization of your choice
+    - Line chart (showing research participation trends over time)
+    - Bar chart (comparing metrics across study types or demographics)
+    - Summary cards/KPI indicators (showing key participation metrics)
+    - At least one additional visualization of your choice
 - Users should be able to filter data by:
-  - Time range (e.g., last 7 days, 14 days, 30 days)
-  - Study type (e.g., Clinical Trials, Surveys, Focus Groups)
-  - Additional filters of your choice (age groups, regions, etc.)
+    - Time range (e.g., last 7 days, 14 days, 30 days)
+    - Study type (e.g., Clinical Trials, Surveys, Focus Groups)
+    - Additional filters of your choice (age groups, regions, etc.)
 - Include a data refresh mechanism
 - Provide visual feedback during data loading
 - Implement a responsive design that works well on different screen sizes
@@ -180,3 +180,22 @@ We value quality over quantity, so focus on delivering a well-structured solutio
 ## Submission
 
 Please submit your solution as a Git repository link. Make sure your repository is public or shared with the appropriate users.
+
+TODO:
+
+- Create one more set of data that can be filtered and shown in Scatter Chart
+    - region (Aus state) with number of participants
+- Make the site responsive
+- Update UI
+- Add refresh button
+    - Add button per graph and summary
+    - Add new endpoints
+    - Invalidate query on endpoint call
+- Make key label map for summary
+-
+
+NOTES:
+
+- Instead of filtering by value of 'Study Type' eg 'Surveys' we filter by the category 'Study Type' itself, so we compare the Applications vs Completions number between the different 'Study Type'
+- There are no create forms in this app, if there were, then I would have implemented zod validator to check the types of the submitted form. Other good addition is to add 'Data Grid' to show all of the created data, eg Participants Details.
+-
