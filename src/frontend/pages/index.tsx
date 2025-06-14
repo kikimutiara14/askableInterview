@@ -1,7 +1,6 @@
 import Head from 'next/head';
 import {
     Container,
-    CircularProgress,
     Typography,
     FormControl,
     InputLabel,
@@ -9,16 +8,15 @@ import {
     Select,
     Button,
 } from '@mui/material';
-import { useSummary, useComparisons, useTrends } from '../hooks/useAnalytics';
+import { useSummary, useComparisons, useTrends, useGenderData } from '../hooks/useAnalytics';
 import SummaryCards from '../components/SummaryCards';
 import ComparisonsBarChart from '../components/ComparisonsBarChart';
-import React, { use, useEffect } from 'react';
+import React from 'react';
 import { Dimension, TimeRange } from '../../types/analytics';
 import TrendsLineChart from '../components/TrendsLineChart';
-import { useQueryClient } from '@tanstack/react-query';
+import GenderScatterChart from '../components/GenderScatterChart';
 
 export default function Dashboard() {
-    const { invalidateQueries } = useQueryClient();
     const [selectedDimension, setSelectedDimension] = React.useState<Dimension>('ageGroup');
     const [selectedTimeRange, setSelectedTimeRange] = React.useState<TimeRange>('30d');
     const { data: summary, error: summaryError, refetch: refetchSummary } = useSummary();
@@ -34,6 +32,11 @@ export default function Dashboard() {
     } = useComparisons({
         dimension: selectedDimension,
     });
+    const {
+        data: genderData,
+        error: genderDataError,
+        refetch: refetchGenderData,
+    } = useGenderData();
 
     return (
         <>
@@ -50,6 +53,7 @@ export default function Dashboard() {
                         refetchComparisons();
                         refetchTrends();
                         refetchSummary();
+                        refetchGenderData();
                     }}
                 >
                     Refresh
@@ -91,8 +95,9 @@ export default function Dashboard() {
                     </Select>
                 </FormControl>
                 <TrendsLineChart data={trends} />
+                <GenderScatterChart data={genderData} />
 
-                {(summaryError || trendsError || comparisonsError) && (
+                {(summaryError || trendsError || comparisonsError || genderDataError) && (
                     <Typography color="error">Failed to load some dashboard data.</Typography>
                 )}
             </Container>

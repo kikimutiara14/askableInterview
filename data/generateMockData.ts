@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import fs from 'fs';
 import path from 'path';
-import { Region, RegionalData } from '../src/types/analytics';
+import { Gender, GenderData } from '../src/types/analytics';
 
 // Define study types
 const STUDY_TYPES = [
@@ -129,12 +129,25 @@ export const generateComparisonData = () => {
     };
 };
 
-export const generateRegionalData = () => {
-    const regions: Region[] = ['ACT', 'NSW', 'NT', 'QLD', 'SA', 'TAS', 'VIC', 'WA'];
-    return regions.reduce((acc, region) => {
-        acc[region] = faker.number.int({ min: 300, max: 4000 });
-        return acc;
-    }, {} as RegionalData);
+export const generateGenderData = () => {
+    const genders: Gender[] = ['F', 'M'];
+    const totalData = faker.number.int({ min: 40, max: 60 });
+    const genderDataF = [];
+    const genderDataM = [];
+    for (let i = 0; i < totalData; i++) {
+        genderDataF.push({
+            age: faker.number.int({ min: 18, max: 70 }),
+            participants: faker.number.int({ min: 300, max: 4000 }),
+        });
+        genderDataM.push({
+            age: faker.number.int({ min: 18, max: 70 }),
+            participants: faker.number.int({ min: 300, max: 4000 }),
+        });
+    }
+    return {
+        F: genderDataF,
+        M: genderDataM,
+    };
 };
 
 // Combine all the data
@@ -142,7 +155,7 @@ const mockData = {
     summary: generateSummaryMetrics(),
     trends: generateTrendData(),
     comparisons: generateComparisonData(),
-    regionalData: generateRegionalData(),
+    genderData: generateGenderData(),
 };
 
 fs.writeFileSync(path.join('public', 'mockData.json'), JSON.stringify(mockData, null, 2));

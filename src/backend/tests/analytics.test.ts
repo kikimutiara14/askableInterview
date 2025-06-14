@@ -16,6 +16,13 @@ describe('AUTH testing', () => {
     });
 });
 
+describe('analyticsService.getSummary', () => {
+    it('returns data', async () => {
+        const data = await analyticsService.getSummary();
+        expect(data).toBeDefined();
+    });
+});
+
 describe('analyticsService.getTrends', () => {
     it('throws error if timeRange is invalid', async () => {
         // @ts-expect-error since we added a type for dimension,
@@ -26,14 +33,14 @@ describe('analyticsService.getTrends', () => {
         );
     });
     it('returns trends for valid timeRange', async () => {
-        const metrics = await analyticsService.getTrends({ timeRange: '7d' });
-        expect(metrics).toBeDefined();
-        expect(metrics.length).toBeGreaterThan(0);
+        const trends = await analyticsService.getTrends({ timeRange: '7d' });
+        expect(trends).toBeDefined();
+        expect(trends.length).toBeGreaterThan(0);
     });
     it('returns 30d trends if no timeRange is provided', async () => {
-        const metrics = await analyticsService.getTrends({});
-        expect(metrics).toBeDefined();
-        expect(metrics[0].data.length).toBeGreaterThan(30);
+        const trends = await analyticsService.getTrends({});
+        expect(trends).toBeDefined();
+        expect(trends[0].data.length).toBeGreaterThan(30);
     });
 });
 
@@ -47,13 +54,20 @@ describe('analyticsService.getComparisons', () => {
         );
     });
     it('returns data for valid dimension', async () => {
-        const metrics = await analyticsService.getComparisons({ dimension: 'studyType' });
-        expect(metrics).toBeDefined();
-        expect(metrics.length).toBeGreaterThan(0);
+        const comparisons = await analyticsService.getComparisons({ dimension: 'studyType' });
+        expect(comparisons).toBeDefined();
+        expect(comparisons.length).toBeGreaterThan(0);
     });
     it('returns age group data if no dimension is provided', async () => {
-        const metrics = await analyticsService.getComparisons({});
-        expect(metrics).toBeDefined();
-        expect(metrics.length).toBeGreaterThan(0);
+        const comparisons = await analyticsService.getComparisons({});
+        expect(comparisons).toBeDefined();
+        expect(comparisons.length).toBeGreaterThan(0);
+    });
+});
+
+describe('analyticsService.getGenderData', () => {
+    it('returns data', async () => {
+        const data = await analyticsService.getGenderData();
+        expect(data).toBeDefined();
     });
 });

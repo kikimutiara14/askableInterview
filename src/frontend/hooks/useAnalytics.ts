@@ -5,6 +5,7 @@ import {
     ComparisonMetric,
     TimeRange,
     Dimension,
+    GenderData,
 } from '../../types/analytics';
 import { apiClient } from '../utils/apiClient';
 
@@ -32,5 +33,12 @@ export function useComparisons({ dimension }: { dimension?: Dimension }) {
             apiClient<ComparisonMetric[]>('http://localhost:4000/api/comparisons', {
                 dimension,
             }),
+    });
+}
+
+export function useGenderData() {
+    return useQuery<GenderData>({
+        queryKey: ['genderData'],
+        queryFn: () => apiClient<GenderData>('http://localhost:4000/api/genders'),
     });
 }

@@ -1,6 +1,6 @@
 export type TimeRange = '7d' | '14d' | '30d';
 export type Dimension = 'ageGroup' | 'studyType';
-export type Region = 'ACT' | 'NSW' | 'NT' | 'QLD' | 'SA' | 'TAS' | 'VIC' | 'WA';
+export type Gender = 'F' | 'M';
 
 export interface Summary {
     totalParticipants: number;
@@ -36,6 +36,9 @@ export interface Comparisons {
     };
 }
 
-export type RegionalData = {
-    [region in Region]: number;
+export type GenderData = {
+    [gender in Gender]: {
+        age: number;
+        participants: number;
+    }[];
 };

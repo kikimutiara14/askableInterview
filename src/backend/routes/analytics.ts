@@ -48,3 +48,12 @@ analyticsRouter.get(
         }
     },
 );
+
+analyticsRouter.get('/genders', async (req, res, next) => {
+    try {
+        const data = await analyticsService.getGenderData();
+        res.json(data);
+    } catch (err) {
+        next(err);
+    }
+});

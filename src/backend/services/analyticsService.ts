@@ -5,7 +5,8 @@ import {
     Summary,
     TrendMetric,
     ComparisonMetric,
-    RegionalData,
+    Gender,
+    GenderData,
 } from '../../types/analytics';
 import { join } from 'path';
 
@@ -45,9 +46,9 @@ export class AnalyticsService {
         return comparisons.metrics;
     }
 
-    async getRegionalData(): Promise<RegionalData> {
+    async getGenderData(): Promise<GenderData> {
         const data = await this.getGeneratedData();
-        return data.regionalData;
+        return data.genderData;
     }
 }
 
