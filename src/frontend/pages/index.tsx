@@ -9,10 +9,10 @@ import {
     Select,
     Button,
 } from '@mui/material';
-import { useSummary, useComparisons, useTrends, useRegenerateData } from '../hooks/useAnalytics';
+import { useSummary, useComparisons, useTrends } from '../hooks/useAnalytics';
 import SummaryCards from '../components/SummaryCards';
 import ComparisonsBarChart from '../components/ComparisonsBarChart';
-import React, { useEffect } from 'react';
+import React, { use, useEffect } from 'react';
 import { Dimension, TimeRange } from '../../types/analytics';
 import TrendsLineChart from '../components/TrendsLineChart';
 import { useQueryClient } from '@tanstack/react-query';
@@ -21,9 +21,17 @@ export default function Dashboard() {
     const { invalidateQueries } = useQueryClient();
     const [selectedDimension, setSelectedDimension] = React.useState<Dimension>('ageGroup');
     const [selectedTimeRange, setSelectedTimeRange] = React.useState<TimeRange>('30d');
-    const { data: summary, error: summaryError } = useSummary();
-    const { data: trends, error: trendsError } = useTrends({ timeRange: selectedTimeRange });
-    const { data: comparisons, error: comparisonsError } = useComparisons({
+    const { data: summary, error: summaryError, refetch: refetchSummary } = useSummary();
+    const {
+        data: trends,
+        error: trendsError,
+        refetch: refetchTrends,
+    } = useTrends({ timeRange: selectedTimeRange });
+    const {
+        data: comparisons,
+        error: comparisonsError,
+        refetch: refetchComparisons,
+    } = useComparisons({
         dimension: selectedDimension,
     });
 
@@ -36,6 +44,16 @@ export default function Dashboard() {
                 <Typography variant="h4" className="mb-4 font-bold">
                     Research Participation Dashboard
                 </Typography>
+                <Button
+                    variant="outlined"
+                    onClick={() => {
+                        refetchComparisons();
+                        refetchTrends();
+                        refetchSummary();
+                    }}
+                >
+                    Refresh
+                </Button>
                 <SummaryCards data={summary} />
                 <FormControl>
                     <InputLabel id="category-label">Dimension</InputLabel>

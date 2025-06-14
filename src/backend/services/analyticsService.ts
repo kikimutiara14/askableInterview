@@ -8,27 +8,8 @@ import {
     RegionalData,
 } from '../../types/analytics';
 import { join } from 'path';
-import {
-    generateComparisonData,
-    generateRegionalData,
-    generateSummaryMetrics,
-    generateTrendData,
-} from '../../../data/generateMockData';
-import { writeFileSync } from 'fs';
 
 export class AnalyticsService {
-    regenerateMockData() {
-        // Combine all the data
-        const mockData = {
-            summary: generateSummaryMetrics(),
-            trends: generateTrendData(),
-            comparisons: generateComparisonData(),
-            regionalData: generateRegionalData(),
-        };
-
-        writeFileSync(join('public', 'mockData.json'), JSON.stringify(mockData, null, 2));
-    }
-
     async getGeneratedData() {
         const filePath = join('public/mockData.json');
         const response = await readFile(filePath, 'utf-8');

@@ -8,13 +8,6 @@ import {
 } from '../../types/analytics';
 import { apiClient } from '../utils/apiClient';
 
-export function useRegenerateData() {
-    return useQuery({
-        queryKey: ['regenerateData'],
-        queryFn: () => apiClient('http://localhost:4000/api/regenerate-data'),
-    });
-}
-
 export function useSummary() {
     return useQuery<Summary>({
         queryKey: ['summary'],
