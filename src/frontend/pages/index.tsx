@@ -57,6 +57,7 @@ export default function Dashboard() {
                             refetchSummary();
                             refetchGenderData();
                         }}
+                        sx={{ height: 50, alignSelf: 'center' }}
                     >
                         Refresh
                     </Button>

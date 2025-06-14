@@ -15,24 +15,26 @@ export default function SummaryCards({ data }: SummaryCardsProps) {
     return (
         <>
             {!data ? (
-                <div className="flex justify-center my-8">
+                <div style={{ display: 'flex', justifyContent: 'center', margin: '2rem 0' }}>
                     <CircularProgress />
                 </div>
             ) : (
-                <Grid container spacing={2} direction={'row'}>
+                <Grid container spacing={2} direction={{ xs: 'column', md: 'row' }}>
                     {summaryKeys.map((item) => (
-                        <Grid key={item}>
+                        <Grid key={item} width={'auto'}>
                             <Card
                                 sx={{
                                     backgroundColor: '#fb5153',
-                                    width: 200,
+                                    width: { xs: '100%', md: 250 },
                                     height: 150,
-                                    fontSize: 12,
-                                    alignContent: 'center',
+                                    display: 'flex',
                                     alignItems: 'center',
+                                    justifyContent: 'center',
                                 }}
                             >
-                                <CardContent>
+                                <CardContent
+                                    sx={{ width: { xs: '100%', md: 250 }, textAlign: 'center' }}
+                                >
                                     <Typography variant="h6" color="text.secondary" gutterBottom>
                                         {summaryKeyMap.get(item)}
                                     </Typography>

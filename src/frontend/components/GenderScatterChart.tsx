@@ -9,7 +9,7 @@ interface GenderScatterChartProps {
 
 export default function GenderScatterChart({ data }: GenderScatterChartProps) {
     return (
-        <Box>
+        <Box mt={20}>
             <Typography variant="h6" gutterBottom sx={{ textAlign: 'center' }}>
                 Gender Data
             </Typography>
@@ -25,7 +25,6 @@ export default function GenderScatterChart({ data }: GenderScatterChartProps) {
                     },
                 ]}
                 height={400}
-                margin={{ top: 30, right: 30, left: 40, bottom: 40 }}
                 loading={!data}
                 grid={{ vertical: true, horizontal: true }}
             />

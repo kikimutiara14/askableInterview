@@ -10,11 +10,10 @@ interface ComparisonBarChartProps {
 
 export default function ComparisonBarChart({ data, xAxisLabel }: ComparisonBarChartProps) {
     return (
-        <Box>
+        <Box mt={20}>
             <Typography variant="h6" gutterBottom sx={{ textAlign: 'center' }}>
                 Comparison Data
             </Typography>
-
             <BarChart
                 xAxis={[
                     {
@@ -29,7 +28,6 @@ export default function ComparisonBarChart({ data, xAxisLabel }: ComparisonBarCh
                     { data: data?.map((datum) => datum.completions) ?? [], label: 'Completions' },
                 ]}
                 height={400}
-                margin={{ top: 30, right: 30, left: 40, bottom: 40 }}
                 grid={{ horizontal: true }}
                 loading={!data}
             />

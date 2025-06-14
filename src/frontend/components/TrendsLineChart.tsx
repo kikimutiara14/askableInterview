@@ -10,7 +10,7 @@ interface TrendsLineChartProps {
 export default function TrendsLineChart({ data }: TrendsLineChartProps) {
     // We can use the first index of data because it will always have the same dates
     return (
-        <Box>
+        <Box mt={20}>
             <Typography variant="h6" gutterBottom sx={{ textAlign: 'center' }}>
                 Trends Data
             </Typography>
