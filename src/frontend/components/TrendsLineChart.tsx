@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { Typography, Box, FormControl, InputLabel, Select } from '@mui/material';
-import { ComparisonMetric, Dimension, TrendMetric } from '../../types/analytics';
+import { Typography, Box } from '@mui/material';
+import { TrendMetric } from '../../types/analytics';
 import { LineChart } from '@mui/x-charts';
 
 interface TrendsLineChartProps {

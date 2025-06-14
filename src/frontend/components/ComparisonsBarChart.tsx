@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { BarChart } from '@mui/x-charts/BarChart';
-import { Typography, Box, FormControl, InputLabel, Select } from '@mui/material';
-import { ComparisonMetric, Dimension } from '../../types/analytics';
-import { D } from '@faker-js/faker/dist/airline-BUL6NtOJ';
+import { Typography, Box } from '@mui/material';
+import { ComparisonMetric } from '../../types/analytics';
 
 interface ComparisonBarChartProps {
     data?: ComparisonMetric[];

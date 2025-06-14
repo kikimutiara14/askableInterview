@@ -7,6 +7,7 @@ import {
     MenuItem,
     Select,
     Button,
+    Box,
 } from '@mui/material';
 import { useSummary, useComparisons, useTrends, useGenderData } from '../hooks/useAnalytics';
 import SummaryCards from '../components/SummaryCards';
@@ -44,57 +45,79 @@ export default function Dashboard() {
                 <title>Analytics Dashboard</title>
             </Head>
             <Container maxWidth="lg" className="py-8">
-                <Typography variant="h4" className="mb-4 font-bold">
-                    Research Participation Dashboard
-                </Typography>
-                <Button
-                    variant="outlined"
-                    onClick={() => {
-                        refetchComparisons();
-                        refetchTrends();
-                        refetchSummary();
-                        refetchGenderData();
-                    }}
-                >
-                    Refresh
-                </Button>
+                <Box display="flex" justifyContent="space-between" mb={2}>
+                    <Typography variant="h4" className="mb-4 font-bold">
+                        Research Participation Dashboard
+                    </Typography>
+                    <Button
+                        variant="outlined"
+                        onClick={() => {
+                            refetchComparisons();
+                            refetchTrends();
+                            refetchSummary();
+                            refetchGenderData();
+                        }}
+                    >
+                        Refresh
+                    </Button>
+                </Box>
                 <SummaryCards data={summary} />
-                <FormControl>
-                    <InputLabel id="category-label">Dimension</InputLabel>
-                    <Select
-                        labelId="category-label"
-                        value={selectedDimension}
-                        label="Dimension"
-                        onChange={(e) => setSelectedDimension(e.target.value)}
-                    >
-                        {Array.from(dimensionKeyMap).map(([key, label]) => (
-                            <MenuItem value={key} key={key}>
-                                {label}
-                            </MenuItem>
-                        ))}
-                    </Select>
-                </FormControl>
-                <ComparisonsBarChart
-                    data={comparisons}
-                    // Adding default value here because typescript still can't deduce that the type is guaranteed to be a string
-                    xAxisLabel={dimensionKeyMap.get(selectedDimension) || 'Age Group'}
-                />
-                <FormControl>
-                    <InputLabel id="filter-label">Time Range</InputLabel>
-                    <Select
-                        labelId="filter-label"
-                        value={selectedTimeRange}
-                        label="Time Range"
-                        onChange={(e) => setSelectedTimeRange(e.target.value)}
-                    >
-                        {Array.from(timeRangeKeyMap).map(([key, label]) => (
-                            <MenuItem value={key} key={key}>
-                                {label}
-                            </MenuItem>
-                        ))}
-                    </Select>
-                </FormControl>
-                <TrendsLineChart data={trends} />
+                <Box
+                    display={'flex'}
+                    alignItems={'center'}
+                    mb={2}
+                    justifyContent={'space-between'}
+                    flexDirection={{ xs: 'column', sm: 'row' }}
+                >
+                    <Box flex={1}>
+                        <ComparisonsBarChart
+                            data={comparisons}
+                            // Adding default value here because typescript still can't deduce that the type is guaranteed to be a string
+                            xAxisLabel={dimensionKeyMap.get(selectedDimension) || 'Age Group'}
+                        />
+                    </Box>
+                    <FormControl>
+                        <InputLabel id="category-label">Dimension</InputLabel>
+                        <Select
+                            labelId="category-label"
+                            value={selectedDimension}
+                            label="Dimension"
+                            onChange={(e) => setSelectedDimension(e.target.value as Dimension)}
+                        >
+                            {Array.from(dimensionKeyMap).map(([key, label]) => (
+                                <MenuItem value={key} key={key}>
+                                    {label}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                </Box>
+                <Box
+                    display={'flex'}
+                    alignItems={'center'}
+                    mb={2}
+                    justifyContent={'space-between'}
+                    flexDirection={{ xs: 'column', sm: 'row' }}
+                >
+                    <Box flex={1}>
+                        <TrendsLineChart data={trends} />
+                    </Box>
+                    <FormControl>
+                        <InputLabel id="filter-label">Time Range</InputLabel>
+                        <Select
+                            labelId="filter-label"
+                            value={selectedTimeRange}
+                            label="Time Range"
+                            onChange={(e) => setSelectedTimeRange(e.target.value as TimeRange)}
+                        >
+                            {Array.from(timeRangeKeyMap).map(([key, label]) => (
+                                <MenuItem value={key} key={key}>
+                                    {label}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                </Box>
                 <GenderScatterChart data={genderData} />
 
                 {(summaryError || trendsError || comparisonsError || genderDataError) && (

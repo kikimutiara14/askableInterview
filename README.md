@@ -183,19 +183,10 @@ Please submit your solution as a Git repository link. Make sure your repository 
 
 TODO:
 
-- Create one more set of data that can be filtered and shown in Scatter Chart
-    - region (Aus state) with number of participants
 - Make the site responsive
 - Update UI
-- Add refresh button
-    - Add button per graph and summary
-    - Add new endpoints
-    - Invalidate query on endpoint call
-- Make key label map for summary
--
 
 NOTES:
 
 - Instead of filtering by value of 'Study Type' eg 'Surveys' we filter by the category 'Study Type' itself, so we compare the Applications vs Completions number between the different 'Study Type'
 - There are no create forms in this app, if there were, then I would have implemented zod validator to check the types of the submitted form. Other good addition is to add 'Data Grid' to show all of the created data, eg Participants Details.
--

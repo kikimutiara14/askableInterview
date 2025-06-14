@@ -25,18 +25,21 @@ export default function SummaryCards({ data }: SummaryCardsProps) {
                             <Card
                                 sx={{
                                     backgroundColor: '#fb5153',
-                                    width: 250,
-                                    height: 250,
-                                    fontSize: 14,
+                                    width: 200,
+                                    height: 150,
+                                    fontSize: 12,
                                     alignContent: 'center',
+                                    alignItems: 'center',
                                 }}
                             >
                                 <CardContent>
                                     <Typography variant="h6" color="text.secondary" gutterBottom>
-                                        {item}
+                                        {summaryKeyMap.get(item)}
                                     </Typography>
                                     <Typography variant="h4" color="text.primary">
-                                        {data[item]}
+                                        {['averageEligibilityRate', 'completionRate'].includes(item)
+                                            ? data[item] + '%'
+                                            : data[item]}
                                     </Typography>
                                 </CardContent>
                             </Card>
@@ -47,3 +50,12 @@ export default function SummaryCards({ data }: SummaryCardsProps) {
         </>
     );
 }
+
+const summaryKeyMap = new Map<keyof Summary, string>([
+    ['totalParticipants', 'Total Participants'],
+    ['activeParticipants', 'Active Participants'],
+    ['totalStudies', 'Total Studies'],
+    ['activeStudies', 'Active Studies'],
+    ['averageEligibilityRate', 'Average Eligibility Rate'],
+    ['completionRate', 'Completion Rate'],
+]);
