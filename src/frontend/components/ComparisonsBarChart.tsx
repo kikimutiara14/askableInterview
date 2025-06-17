@@ -6,9 +6,14 @@ import { ComparisonMetric } from '../../types/analytics';
 interface ComparisonBarChartProps {
     data?: ComparisonMetric[];
     xAxisLabel: string;
+    isLoading: boolean;
 }
 
-export default function ComparisonBarChart({ data, xAxisLabel }: ComparisonBarChartProps) {
+export default function ComparisonBarChart({
+    data,
+    xAxisLabel,
+    isLoading,
+}: ComparisonBarChartProps) {
     return (
         <Box mt={20}>
             <Typography variant="h6" gutterBottom sx={{ textAlign: 'center' }}>
@@ -29,7 +34,7 @@ export default function ComparisonBarChart({ data, xAxisLabel }: ComparisonBarCh
                 ]}
                 height={400}
                 grid={{ horizontal: true }}
-                loading={!data}
+                loading={isLoading}
             />
         </Box>
     );

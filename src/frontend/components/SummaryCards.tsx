@@ -8,47 +8,46 @@ import { CircularProgress } from '@mui/material';
 
 interface SummaryCardsProps {
     data?: Summary;
+    isLoading: boolean;
 }
 
-export default function SummaryCards({ data }: SummaryCardsProps) {
+export default function SummaryCards({ data, isLoading }: SummaryCardsProps) {
     const summaryKeys = Object.keys(data ?? {}) as (keyof Summary)[];
     return (
         <>
-            {!data ? (
-                <div style={{ display: 'flex', justifyContent: 'center', margin: '2rem 0' }}>
-                    <CircularProgress />
-                </div>
-            ) : (
-                <Grid container spacing={2} direction={{ xs: 'column', md: 'row' }}>
-                    {summaryKeys.map((item) => (
-                        <Grid key={item} width={'auto'}>
-                            <Card
-                                sx={{
-                                    backgroundColor: '#fb5153',
-                                    width: { xs: '100%', md: 250 },
-                                    height: 150,
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                }}
+            <Grid container spacing={2} direction={{ xs: 'column', md: 'row' }}>
+                {summaryKeys.map((item) => (
+                    <Grid key={item} width={'auto'}>
+                        <Card
+                            sx={{
+                                backgroundColor: '#fb5153',
+                                width: { xs: '100%', md: 250 },
+                                height: 150,
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                            }}
+                        >
+                            <CardContent
+                                sx={{ width: { xs: '100%', md: 250 }, textAlign: 'center' }}
                             >
-                                <CardContent
-                                    sx={{ width: { xs: '100%', md: 250 }, textAlign: 'center' }}
-                                >
-                                    <Typography variant="h6" color="text.secondary" gutterBottom>
-                                        {summaryKeyMap.get(item)}
-                                    </Typography>
+                                <Typography variant="h6" color="text.secondary" gutterBottom>
+                                    {summaryKeyMap.get(item)}
+                                </Typography>
+                                {isLoading || !data ? (
+                                    <CircularProgress color="inherit" />
+                                ) : (
                                     <Typography variant="h4" color="text.primary">
                                         {['averageEligibilityRate', 'completionRate'].includes(item)
                                             ? data[item] + '%'
                                             : data[item]}
                                     </Typography>
-                                </CardContent>
-                            </Card>
-                        </Grid>
-                    ))}
-                </Grid>
-            )}
+                                )}
+                            </CardContent>
+                        </Card>
+                    </Grid>
+                ))}
+            </Grid>
         </>
     );
 }

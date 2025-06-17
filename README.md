@@ -181,11 +181,6 @@ We value quality over quantity, so focus on delivering a well-structured solutio
 
 Please submit your solution as a Git repository link. Make sure your repository is public or shared with the appropriate users.
 
-TODO:
-
-- Make the site responsive
-- Update UI
-
 NOTES:
 
 - Instead of filtering by value of 'Study Type' eg 'Surveys' we filter by the category 'Study Type' itself, so we compare the Applications vs Completions number between the different 'Study Type'

@@ -5,9 +5,10 @@ import { LineChart } from '@mui/x-charts';
 
 interface TrendsLineChartProps {
     data?: TrendMetric[];
+    isLoading: boolean;
 }
 
-export default function TrendsLineChart({ data }: TrendsLineChartProps) {
+export default function TrendsLineChart({ data, isLoading }: TrendsLineChartProps) {
     // We can use the first index of data because it will always have the same dates
     return (
         <Box mt={20}>
@@ -26,7 +27,7 @@ export default function TrendsLineChart({ data }: TrendsLineChartProps) {
                 xAxis={[
                     { scaleType: 'band', data: data?.[0].data.map((datum) => datum.date) ?? [] },
                 ]}
-                loading={!data}
+                loading={isLoading}
             />
         </Box>
     );

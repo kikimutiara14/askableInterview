@@ -158,6 +158,6 @@ const mockData = {
     genderData: generateGenderData(),
 };
 
-fs.writeFileSync(path.join('public', 'mockData.json'), JSON.stringify(mockData, null, 2));
+fs.writeFileSync(path.join(__dirname, 'mockData.json'), JSON.stringify(mockData, null, 2));
 
 console.log('Mock data generated successfully!');

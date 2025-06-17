@@ -20,16 +20,26 @@ import GenderScatterChart from '../components/GenderScatterChart';
 export default function Dashboard() {
     const [selectedDimension, setSelectedDimension] = React.useState<Dimension>('ageGroup');
     const [selectedTimeRange, setSelectedTimeRange] = React.useState<TimeRange>('30d');
-    const { data: summary, error: summaryError, refetch: refetchSummary } = useSummary();
+    const {
+        data: summary,
+        error: summaryError,
+        refetch: refetchSummary,
+        isLoading: isSummaryLoading,
+        isFetching: isSummaryFetching,
+    } = useSummary();
     const {
         data: trends,
         error: trendsError,
         refetch: refetchTrends,
+        isLoading: isTrendsLoading,
+        isFetching: isTrendsFetching,
     } = useTrends({ timeRange: selectedTimeRange });
     const {
         data: comparisons,
         error: comparisonsError,
         refetch: refetchComparisons,
+        isLoading: isComparisonsLoading,
+        isFetching: isComparisonsFetching,
     } = useComparisons({
         dimension: selectedDimension,
     });
@@ -37,6 +47,8 @@ export default function Dashboard() {
         data: genderData,
         error: genderDataError,
         refetch: refetchGenderData,
+        isLoading: isGenderDataLoading,
+        isFetching: isGenderDataFetching,
     } = useGenderData();
 
     return (
@@ -45,12 +57,21 @@ export default function Dashboard() {
                 <title>Analytics Dashboard</title>
             </Head>
             <Container maxWidth="lg" className="py-8">
-                <Box display="flex" justifyContent="space-between" mb={2}>
+                <Box
+                    display="flex"
+                    justifyContent="space-between"
+                    mb={2}
+                    position={'sticky'}
+                    top={0}
+                    zIndex={100}
+                    bgcolor="background.paper"
+                    paddingTop={2}
+                >
                     <Typography variant="h4" className="mb-4 font-bold">
                         Research Participation Dashboard
                     </Typography>
                     <Button
-                        variant="outlined"
+                        variant="contained"
                         onClick={() => {
                             refetchComparisons();
                             refetchTrends();
@@ -62,7 +83,7 @@ export default function Dashboard() {
                         Refresh
                     </Button>
                 </Box>
-                <SummaryCards data={summary} />
+                <SummaryCards data={summary} isLoading={isSummaryLoading || isSummaryFetching} />
                 <Box
                     display={'flex'}
                     alignItems={'center'}
@@ -75,6 +96,7 @@ export default function Dashboard() {
                             data={comparisons}
                             // Adding default value here because typescript still can't deduce that the type is guaranteed to be a string
                             xAxisLabel={dimensionKeyMap.get(selectedDimension) || 'Age Group'}
+                            isLoading={isComparisonsLoading || isComparisonsFetching}
                         />
                     </Box>
                     <FormControl>
@@ -101,7 +123,10 @@ export default function Dashboard() {
                     flexDirection={{ xs: 'column', sm: 'row' }}
                 >
                     <Box flex={1}>
-                        <TrendsLineChart data={trends} />
+                        <TrendsLineChart
+                            data={trends}
+                            isLoading={isTrendsLoading || isTrendsFetching}
+                        />
                     </Box>
                     <FormControl>
                         <InputLabel id="filter-label">Time Range</InputLabel>
@@ -119,7 +144,10 @@ export default function Dashboard() {
                         </Select>
                     </FormControl>
                 </Box>
-                <GenderScatterChart data={genderData} />
+                <GenderScatterChart
+                    data={genderData}
+                    isLoading={isGenderDataLoading || isGenderDataFetching}
+                />
 
                 {(summaryError || trendsError || comparisonsError || genderDataError) && (
                     <Typography color="error">Failed to load some dashboard data.</Typography>

@@ -11,7 +11,7 @@
         "start-frontend": "next start src/frontend",
         "start-all": "concurrently \"npm run start-backend\" \"npm run start-frontend\"",
         "build-all": "npm run build-backend && npm run build-frontend",
-        "run": "npm run build-all && npm run start-all",
+        "start": "npm run build-all && npm run start-all",
         "test": "jest"
     },
     "dependencies": {

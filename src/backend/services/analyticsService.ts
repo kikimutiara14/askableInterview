@@ -5,26 +5,18 @@ import {
     Summary,
     TrendMetric,
     ComparisonMetric,
-    Gender,
     GenderData,
 } from '../../types/analytics';
 import { join } from 'path';
+import mockData from '../../../data/mockData.json';
 
 export class AnalyticsService {
-    async getGeneratedData() {
-        const filePath = join('public/mockData.json');
-        const response = await readFile(filePath, 'utf-8');
-        return JSON.parse(response);
-    }
-
     async getSummary(): Promise<Summary> {
-        const data = await this.getGeneratedData();
-        return data.summary;
+        return mockData.summary;
     }
 
     async getTrends({ timeRange }: { timeRange?: TimeRange }): Promise<TrendMetric[]> {
-        const data = await this.getGeneratedData();
-        const trendsData = data.trends;
+        const trendsData = mockData.trends;
         // If no time range is provided, default to '30d' to show the whole trends data
         const filteredTrends = timeRange
             ? trendsData.timeRanges[timeRange]
@@ -36,8 +28,7 @@ export class AnalyticsService {
     }
 
     async getComparisons({ dimension }: { dimension?: Dimension }): Promise<ComparisonMetric[]> {
-        const data = await this.getGeneratedData();
-        const comparisonsData = data.comparisons;
+        const comparisonsData = mockData.comparisons;
         // If no dimension is provided, default to ageGroup
         const comparisons = dimension ? comparisonsData[dimension] : comparisonsData.ageGroup;
         if (!comparisons) {
@@ -47,8 +38,7 @@ export class AnalyticsService {
     }
 
     async getGenderData(): Promise<GenderData> {
-        const data = await this.getGeneratedData();
-        return data.genderData;
+        return mockData.genderData;
     }
 }
 

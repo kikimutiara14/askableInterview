@@ -5,9 +5,10 @@ import { GenderData } from '../../types/analytics';
 
 interface GenderScatterChartProps {
     data?: GenderData;
+    isLoading: boolean;
 }
 
-export default function GenderScatterChart({ data }: GenderScatterChartProps) {
+export default function GenderScatterChart({ data, isLoading }: GenderScatterChartProps) {
     return (
         <Box mt={20}>
             <Typography variant="h6" gutterBottom sx={{ textAlign: 'center' }}>
@@ -25,7 +26,7 @@ export default function GenderScatterChart({ data }: GenderScatterChartProps) {
                     },
                 ]}
                 height={400}
-                loading={!data}
+                loading={isLoading}
                 grid={{ vertical: true, horizontal: true }}
             />
         </Box>
