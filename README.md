@@ -183,29 +183,46 @@ Please submit your solution as a Git repository link. Make sure your repository 
 
 ## KIKI'S NOTES
 
-### How to run the app
+### How to Run the App
 
-Simply run 'npm run start' on the root directory, and it will build the BE and FE, and then run the whole stack concurrently. FE will by default hosted in localhost:3000 while the BE in localhost:4000
+Simply run `npm run start` from the root directory. This command will build both the backend (BE) and frontend (FE), and then start the entire stack concurrently. By default, the frontend is hosted at `localhost:3000` and the backend at `localhost:4000`.
+
+---
 
 ### Front End
 
-- I used Tanstack query in the front end to query the data and send requests to the backend. I use this library because it's easy to use and we can easily extent the function to however we need as well. One example is to build a wrapper so dev can pass in options ie 'onSuccess' etc.
-- I use MUI for the components because it works well with react and it has huge library for complex components ie graph and layout components. It also provide form fields that we can use for create or update form.
-- I use next.js to build routing and page layout for the FE because it's one of the most common library to use for building frontend, and it works well with Tanstack query.
-- I separate the different components into its own file, ie 'TrendsLineChart.tsx' to make it reusable and it's good practice to contain a component's logic in it's own file, so the parent only need to pass in necessary data for the component to work. I currently name the files specific to the data it's presenting, but if we want to reuse these components for other data, we can rename it to be something more generic.
-- 'useAnalytics.ts' is there to contain the query logic for the api calls, most examples would show to do this inline within the FrontEnd tsx file, but it's better to isolate this and only export the 'use...' functions so the consumer only need to pass on the parameter.
-- I was planning to use Tailwind to style the app, but since we only have simple data and graph, the MUI library is sufficient to style the data. But for more complex view/design, Tailwind is a great framework to use.
+- **Data Fetching:**  
+  I use TanStack Query on the frontend for data fetching and backend requests. I chose this library for its simplicity and flexibility—it’s easy to extend, for example by wrapping it to allow custom options like `onSuccess`.
+- **UI Components:**  
+  MUI is used for UI components due to its seamless React integration and comprehensive set of advanced components, such as graphs and form fields. This makes it suitable for both layouts and interactive forms.
+- **Routing & Layout:**  
+  Next.js handles routing and page structure. It’s a popular choice for frontend development and works well with TanStack Query.
+- **Component Structure:**  
+  Components are split into individual files (e.g., `TrendsLineChart.tsx`) to promote reusability and encapsulation—parents only need to provide necessary data. While files are currently named for the specific data they display, they can be renamed for broader reuse if needed.
+- **API Logic:**  
+  Query logic is encapsulated in files like `useAnalytics.ts`. Rather than placing API calls inline within components, this approach exposes only the necessary hooks (`use...`) to the component's consumers, promoting separation of concerns.
+- **Styling:**  
+  While I considered Tailwind CSS for additional styling, MUI was sufficient for the current requirements. For more complex views or designs, Tailwind could be a valuable addition.
+
+---
 
 ### Back End
 
-- I use express.js in the backend for the controller layer, and I picked this library because it's robust and we can extent it to be more secure and versatile.
-- I separate the controller with the service file so the controller only handle the network request while the service file handle the business logic. There's also 'middleware' directory that host the basic auth file and error handler.
-- The auth is a simple concat between the word 'Basic' and encrypted credential with username: admin, and password: password. with this we can add auth layer to our controller and even the FE has to pass this as a token for the authorization header. For a simple app, this gets the job done, but for a proper app we need a proper auth ie fusionAuth.
-- For the service functions, I read the data straight from the mockData json file, then I create separate service function for each data set. This is to separate out the logic into it's own service function, and with the help of typescript, we can enforce the typing. So in the future if we need to use these functions within each other or by different service, we can inform the type to the consumer.
-- I added tests for the service functions that lives in 'analytics.test.ts' that uses Jest. This file is testing the edge cases for each service functions and also happy paths.
+- **Framework:**  
+  The backend uses Express.js for its robustness and extensibility.
+- **Architecture:**  
+  Controllers are separated from service files: controllers handle network requests, while services contain business logic. Middleware (e.g., for basic auth and error handling) lives in its own directory.
+- **Authentication:**  
+  Authentication uses a simple "Basic" scheme with hardcoded credentials (`admin`/`password`). This is sufficient for demo purposes, but a production app should use a more robust solution (e.g., FusionAuth).
+- **Service Layer:**  
+  Service functions read from mock JSON data and are organized by dataset. TypeScript enforces typing, making services reusable and maintainable.
+- **Testing:**  
+  Service functions are tested in `analytics.test.ts` using Jest, covering both edge cases and typical usage.
+
+---
 
 ### Other Notes
 
-- Instead of filtering by value of 'Study Type' eg 'Surveys' we filter by the category 'Study Type' itself, so we compare the Applications vs Completions number between the different 'Study Type'
-- There are no create forms in this app, if there were, then I would have implemented zod validator to check the types of the submitted form. Other good addition is to add 'Data Grid' to show all of the created data, eg Participants Details.
-- There's definitely room to improve how the app look, would love to spend more time on it, and a mock design would help as well.
+- Instead of filtering by specific 'Study Type' values (e.g., "Surveys"), the app filters by the 'Study Type' category, comparing Applications vs. Completions across all types.
+- The app does not include create forms; if it did, I would use Zod for form validation and possibly add a Data Grid for displaying created data (e.g., participant details).
+- There’s room for UI improvements and enhancements, especially with a dedicated design mockup.
