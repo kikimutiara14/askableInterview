@@ -183,6 +183,12 @@ Please submit your solution as a Git repository link. Make sure your repository 
 
 ## KIKI'S NOTES
 
+### How to run the app
+
+Simply run 'npm run start' on the root directory, and it will build the BE and FE, and then run the whole stack concurrently. FE will by default hosted in localhost:3000 while the BE in localhost:4000
+
+### Front End
+
 - I used Tanstack query in the front end to query the data and send requests to the backend. I use this library because it's easy to use and we can easily extent the function to however we need as well. One example is to build a wrapper so dev can pass in options ie 'onSuccess' etc.
 - I use MUI for the components because it works well with react and it has huge library for complex components ie graph and layout components. It also provide form fields that we can use for create or update form.
 - I use next.js to build routing and page layout for the FE because it's one of the most common library to use for building frontend, and it works well with Tanstack query.
@@ -190,5 +196,16 @@ Please submit your solution as a Git repository link. Make sure your repository 
 - 'useAnalytics.ts' is there to contain the query logic for the api calls, most examples would show to do this inline within the FrontEnd tsx file, but it's better to isolate this and only export the 'use...' functions so the consumer only need to pass on the parameter.
 - I was planning to use Tailwind to style the app, but since we only have simple data and graph, the MUI library is sufficient to style the data. But for more complex view/design, Tailwind is a great framework to use.
 
+### Back End
+
+- I use express.js in the backend for the controller layer, and I picked this library because it's robust and we can extent it to be more secure and versatile.
+- I separate the controller with the service file so the controller only handle the network request while the service file handle the business logic. There's also 'middleware' directory that host the basic auth file and error handler.
+- The auth is a simple concat between the word 'Basic' and encrypted credential with username: admin, and password: password. with this we can add auth layer to our controller and even the FE has to pass this as a token for the authorization header. For a simple app, this gets the job done, but for a proper app we need a proper auth ie fusionAuth.
+- For the service functions, I read the data straight from the mockData json file, then I create separate service function for each data set. This is to separate out the logic into it's own service function, and with the help of typescript, we can enforce the typing. So in the future if we need to use these functions within each other or by different service, we can inform the type to the consumer.
+- I added tests for the service functions that lives in 'analytics.test.ts' that uses Jest. This file is testing the edge cases for each service functions and also happy paths.
+
+### Other Notes
+
 - Instead of filtering by value of 'Study Type' eg 'Surveys' we filter by the category 'Study Type' itself, so we compare the Applications vs Completions number between the different 'Study Type'
 - There are no create forms in this app, if there were, then I would have implemented zod validator to check the types of the submitted form. Other good addition is to add 'Data Grid' to show all of the created data, eg Participants Details.
+- There's definitely room to improve how the app look, would love to spend more time on it, and a mock design would help as well.
