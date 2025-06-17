@@ -1,4 +1,3 @@
-import { readFile } from 'fs/promises';
 import {
     TimeRange,
     Dimension,
@@ -7,7 +6,6 @@ import {
     ComparisonMetric,
     GenderData,
 } from '../../types/analytics';
-import { join } from 'path';
 import mockData from '../../../data/mockData.json';
 
 export class AnalyticsService {

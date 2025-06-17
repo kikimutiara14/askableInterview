@@ -181,7 +181,14 @@ We value quality over quantity, so focus on delivering a well-structured solutio
 
 Please submit your solution as a Git repository link. Make sure your repository is public or shared with the appropriate users.
 
-NOTES:
+## KIKI'S NOTES
+
+- I used Tanstack query in the front end to query the data and send requests to the backend. I use this library because it's easy to use and we can easily extent the function to however we need as well. One example is to build a wrapper so dev can pass in options ie 'onSuccess' etc.
+- I use MUI for the components because it works well with react and it has huge library for complex components ie graph and layout components. It also provide form fields that we can use for create or update form.
+- I use next.js to build routing and page layout for the FE because it's one of the most common library to use for building frontend, and it works well with Tanstack query.
+- I separate the different components into its own file, ie 'TrendsLineChart.tsx' to make it reusable and it's good practice to contain a component's logic in it's own file, so the parent only need to pass in necessary data for the component to work. I currently name the files specific to the data it's presenting, but if we want to reuse these components for other data, we can rename it to be something more generic.
+- 'useAnalytics.ts' is there to contain the query logic for the api calls, most examples would show to do this inline within the FrontEnd tsx file, but it's better to isolate this and only export the 'use...' functions so the consumer only need to pass on the parameter.
+- I was planning to use Tailwind to style the app, but since we only have simple data and graph, the MUI library is sufficient to style the data. But for more complex view/design, Tailwind is a great framework to use.
 
 - Instead of filtering by value of 'Study Type' eg 'Surveys' we filter by the category 'Study Type' itself, so we compare the Applications vs Completions number between the different 'Study Type'
 - There are no create forms in this app, if there were, then I would have implemented zod validator to check the types of the submitted form. Other good addition is to add 'Data Grid' to show all of the created data, eg Participants Details.
