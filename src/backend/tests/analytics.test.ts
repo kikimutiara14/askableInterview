@@ -66,8 +66,22 @@ describe('analyticsService.getComparisons', () => {
 });
 
 describe('analyticsService.getGenderData', () => {
-    it('returns data', async () => {
-        const data = await analyticsService.getGenderData();
-        expect(data).toBeDefined();
+    it('throws error if gender is invalid', async () => {
+        // @ts-expect-error since we added a type for gender,
+        // typescript will complain if we pass an invalid value,
+        // but we want to test this for negative testing
+        await expect(analyticsService.getGenderData({ gender: 'invalid' })).rejects.toThrow(
+            'No gender data found for gender: invalid',
+        );
+    });
+    it('returns data for valid gender', async () => {
+        const genderData = await analyticsService.getGenderData({ gender: 'F' });
+        expect(genderData).toBeDefined();
+        expect(genderData.length).toBeGreaterThan(0);
+    });
+    it('returns M data if no gender is provided', async () => {
+        const genderData = await analyticsService.getGenderData({});
+        expect(genderData).toBeDefined();
+        expect(genderData.length).toBeGreaterThan(0);
     });
 });

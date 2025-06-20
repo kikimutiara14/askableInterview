@@ -5,6 +5,7 @@ import {
     TrendMetric,
     ComparisonMetric,
     GenderData,
+    Gender,
 } from '../../types/analytics';
 import mockData from '../../../data/mockData.json';
 
@@ -35,8 +36,14 @@ export class AnalyticsService {
         return comparisons.metrics;
     }
 
-    async getGenderData(): Promise<GenderData> {
-        return mockData.genderData;
+    async getGenderData({ gender }: { gender?: Gender }): Promise<GenderData[Gender]> {
+        const allGenderData = mockData.genderData;
+        // If no gender is provided, default to M
+        const genderData = gender ? allGenderData[gender] : allGenderData.M;
+        if (!genderData) {
+            throw new Error(`No gender data found for gender: ${gender}`);
+        }
+        return genderData;
     }
 }
 

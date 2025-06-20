@@ -13,13 +13,14 @@ import { useSummary, useComparisons, useTrends, useGenderData } from '../hooks/u
 import SummaryCards from '../components/SummaryCards';
 import ComparisonsBarChart from '../components/ComparisonsBarChart';
 import React from 'react';
-import { Dimension, TimeRange } from '../../types/analytics';
+import { Dimension, Gender, TimeRange } from '../../types/analytics';
 import TrendsLineChart from '../components/TrendsLineChart';
 import GenderScatterChart from '../components/GenderScatterChart';
 
 export default function Dashboard() {
     const [selectedDimension, setSelectedDimension] = React.useState<Dimension>('ageGroup');
     const [selectedTimeRange, setSelectedTimeRange] = React.useState<TimeRange>('30d');
+    const [selectedGender, setSelectedGender] = React.useState<Gender>('M');
     const {
         data: summary,
         error: summaryError,
@@ -49,7 +50,7 @@ export default function Dashboard() {
         refetch: refetchGenderData,
         isLoading: isGenderDataLoading,
         isFetching: isGenderDataFetching,
-    } = useGenderData();
+    } = useGenderData({ gender: selectedGender });
 
     return (
         <>
@@ -78,7 +79,7 @@ export default function Dashboard() {
                             refetchSummary();
                             refetchGenderData();
                         }}
-                        sx={{ height: 50, alignSelf: 'center' }}
+                        sx={{ height: 50, alignSelf: 'center', paddingX: 4 }}
                     >
                         Refresh
                     </Button>
@@ -106,6 +107,7 @@ export default function Dashboard() {
                             value={selectedDimension}
                             label="Dimension"
                             onChange={(e) => setSelectedDimension(e.target.value as Dimension)}
+                            sx={{ minWidth: 100 }}
                         >
                             {Array.from(dimensionKeyMap).map(([key, label]) => (
                                 <MenuItem value={key} key={key}>
@@ -135,6 +137,7 @@ export default function Dashboard() {
                             value={selectedTimeRange}
                             label="Time Range"
                             onChange={(e) => setSelectedTimeRange(e.target.value as TimeRange)}
+                            sx={{ minWidth: 100 }}
                         >
                             {Array.from(timeRangeKeyMap).map(([key, label]) => (
                                 <MenuItem value={key} key={key}>
@@ -144,10 +147,37 @@ export default function Dashboard() {
                         </Select>
                     </FormControl>
                 </Box>
-                <GenderScatterChart
-                    data={genderData}
-                    isLoading={isGenderDataLoading || isGenderDataFetching}
-                />
+                <Box
+                    display={'flex'}
+                    alignItems={'center'}
+                    mb={2}
+                    justifyContent={'space-between'}
+                    flexDirection={{ xs: 'column', sm: 'row' }}
+                >
+                    <Box flex={1}>
+                        <GenderScatterChart
+                            data={genderData}
+                            isLoading={isGenderDataLoading || isGenderDataFetching}
+                            selectedGender={selectedGender}
+                        />
+                    </Box>
+                    <FormControl>
+                        <InputLabel id="gender-label">Gender</InputLabel>
+                        <Select
+                            labelId="gender-label"
+                            value={selectedGender}
+                            label="Gender"
+                            onChange={(e) => setSelectedGender(e.target.value as Gender)}
+                            sx={{ minWidth: 100 }}
+                        >
+                            {['F', 'M'].map((item) => (
+                                <MenuItem value={item} key={item}>
+                                    {item}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                </Box>
 
                 {(summaryError || trendsError || comparisonsError || genderDataError) && (
                     <Typography color="error">Failed to load some dashboard data.</Typography>

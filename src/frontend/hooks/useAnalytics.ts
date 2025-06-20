@@ -6,6 +6,7 @@ import {
     TimeRange,
     Dimension,
     GenderData,
+    Gender,
 } from '../../types/analytics';
 import { apiClient } from '../utils/apiClient';
 
@@ -36,9 +37,12 @@ export function useComparisons({ dimension }: { dimension?: Dimension }) {
     });
 }
 
-export function useGenderData() {
-    return useQuery<GenderData>({
-        queryKey: ['genderData'],
-        queryFn: () => apiClient<GenderData>('http://localhost:4000/api/genders'),
+export function useGenderData({ gender }: { gender?: Gender }) {
+    return useQuery<GenderData[Gender]>({
+        queryKey: ['genderData', gender],
+        queryFn: () =>
+            apiClient<GenderData[Gender]>('http://localhost:4000/api/genders', {
+                gender,
+            }),
     });
 }

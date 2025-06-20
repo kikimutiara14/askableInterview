@@ -1,14 +1,19 @@
 import * as React from 'react';
 import { Typography, Box } from '@mui/material';
 import { ScatterChart } from '@mui/x-charts';
-import { GenderData } from '../../types/analytics';
+import { Gender, GenderData } from '../../types/analytics';
 
 interface GenderScatterChartProps {
-    data?: GenderData;
+    data?: GenderData[Gender];
     isLoading: boolean;
+    selectedGender: Gender;
 }
 
-export default function GenderScatterChart({ data, isLoading }: GenderScatterChartProps) {
+export default function GenderScatterChart({
+    data,
+    isLoading,
+    selectedGender,
+}: GenderScatterChartProps) {
     return (
         <Box mt={20}>
             <Typography variant="h6" gutterBottom sx={{ textAlign: 'center' }}>
@@ -17,12 +22,8 @@ export default function GenderScatterChart({ data, isLoading }: GenderScatterCha
             <ScatterChart
                 series={[
                     {
-                        label: 'F',
-                        data: data?.F.map((datum) => ({ x: datum.age, y: datum.participants })),
-                    },
-                    {
-                        label: 'M',
-                        data: data?.M.map((datum) => ({ x: datum.age, y: datum.participants })),
+                        label: selectedGender,
+                        data: data?.map((datum) => ({ x: datum.age, y: datum.participants })),
                     },
                 ]}
                 height={400}

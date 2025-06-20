@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { analyticsService } from '../services/analyticsService';
-import { TimeRange, Dimension } from '../../types/analytics';
+import { TimeRange, Dimension, Gender } from '../../types/analytics';
 import { Request, Response, NextFunction } from 'express';
 
 // All routes assume /api prefix from main app
@@ -49,11 +49,15 @@ analyticsRouter.get(
     },
 );
 
-analyticsRouter.get('/genders', async (req, res, next) => {
-    try {
-        const data = await analyticsService.getGenderData();
-        res.json(data);
-    } catch (err) {
-        next(err);
-    }
-});
+analyticsRouter.get(
+    '/genders',
+    async (req: Request<{}, {}, {}, { gender?: Gender }>, res: Response, next: NextFunction) => {
+        try {
+            const { gender } = req.query;
+            const data = await analyticsService.getGenderData({ gender });
+            res.json(data);
+        } catch (err) {
+            next(err);
+        }
+    },
+);
