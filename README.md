@@ -185,7 +185,7 @@ Please submit your solution as a Git repository link. Make sure your repository 
 
 ### How to Run the App
 
-Simply run `npm run start` from the root directory. This command will build both the backend (BE) and frontend (FE), and then start the entire stack concurrently. By default, the frontend is hosted at `localhost:3000` and the backend at `localhost:4000`.
+Simply run `npm i` to install all of the required node packages, and run `npm run generate:data` to generate the mock data json file. Then run `npm run start` from the root directory. This command will build both the backend (BE) and frontend (FE), and then start the entire stack concurrently. By default, the frontend is hosted at `localhost:3000` and the backend at `localhost:4000`.
 
 ---
 
